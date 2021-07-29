@@ -1,0 +1,119 @@
+<template>
+  <el-dialog
+      v-el-drag-dialog
+      :title="title"
+      :visible.sync="dialogVisible"
+      :before-close="beforeClose"
+      :close-on-click-modal="false"
+      @close="handleClose('form')"
+      @open="dialogOpen"
+  >
+    <el-form
+        ref="form"
+        :rules="rules"
+        :model="form"
+        class="demo-form-inline"
+        label-width="120px"
+    >
+      <el-form-item prop="username" label="登录名称">
+        <el-input v-model="form.username" placeholder="请输入登录名称" />
+      </el-form-item>
+
+      <el-form-item>
+        <el-button type="primary" @click="submitForm('form')">提交</el-button>
+        <el-button @click="resetForm('form')">重置</el-button>
+      </el-form-item>
+    </el-form>
+  </el-dialog>
+</template>
+
+<script>
+  import { create, getById, update } from '@/api/stu/{{name}}'
+  export default {
+    name: '{{properCase name}}',
+    components: {
+
+    },
+
+    props: {
+      dialogVisible: {
+        type: Boolean,
+        default: false
+      },
+      data: {
+        type: Object,
+        default: () => {}
+      },
+      title: {
+        type: String,
+        default: ''
+      },
+      type: {
+        type: String,
+        default: 'add'
+
+      }
+    },
+    data() {
+      return {
+
+        form: {
+          'username': '',
+        },
+        rules: {
+          // //
+          username: [
+            { message: '用户名不能为空', required: true, trigger: 'blur' }
+          ],
+        }
+      }
+    },
+    computed: {},
+    watch: {},
+    created() {
+    },
+    methods: {
+
+      async dialogOpen() {
+        if (this.type === 'edit') {
+          const res = await getById(this.data.id)
+          this.form = res.data
+        } else {
+          this.form = this.$options.data().form
+          console.log(this.$options.data().form)
+        }
+      },
+      async submitForm(formName) {
+        this.$refs[formName].validate(async valid => {
+          if (valid) {
+            if (this.type === 'edit') {
+              await update(this.form)
+              this.$emit('update-list')
+              this.$message.success('操作成功')
+            } else {
+              const res = await create(this.form)
+              this.$emit('update-list')
+              this.$message.success(res.msg)
+            }
+            this.beforeClose()
+            this.resetForm(formName)
+          } else {
+            this.$message.error('error submit!')
+            return false
+          }
+        })
+      },
+      async handleClose(formName) {
+        this.resetForm(formName)
+      },
+      beforeClose() {
+        this.$emit('update:dialogVisible', false)
+      },
+      resetForm(formName) {
+        this.$refs[formName].resetFields()
+      }
+    }
+  }
+</script>
+
+<style scoped></style>
