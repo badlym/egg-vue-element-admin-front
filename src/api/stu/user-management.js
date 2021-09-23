@@ -44,3 +44,9 @@ export function getRole() {
 
   })
 }
+export function getUserCourse(query) {
+  return request({
+    url: '/api/user/getUserCourse',
+    params: query
+  })
+}

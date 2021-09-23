@@ -56,11 +56,11 @@ service.interceptors.request.use(
     }
 
     // ------------------------------------------------------------------------------------
-    removePending(config) // 在一个ajax发送前执行一下取消操作
-    config.cancelToken = new CancelToken(c => {
-      // 这里的ajax标识我是用请求地址&请求方式拼接的字符串，当然你可以选择其他的一些方式
-      pending.push({ u: config.url + '&' + config.method, f: c })
-    })
+    // removePending(config) // 在一个ajax发送前执行一下取消操作
+    // config.cancelToken = new CancelToken(c => {
+    //   // 这里的ajax标识我是用请求地址&请求方式拼接的字符串，当然你可以选择其他的一些方式
+    //   pending.push({ u: config.url + '&' + config.method, f: c })
+    // })
     // ---------------------------------------------------------------
     return config
   },

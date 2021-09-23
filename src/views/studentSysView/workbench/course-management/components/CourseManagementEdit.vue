@@ -15,10 +15,12 @@
       class="demo-form-inline"
       label-width="120px"
     >
-      <el-form-item prop="username" label="登录名称">
-        <el-input v-model="form.username" placeholder="请输入登录名称" />
+      <!--      <el-form-item prop="number" label="课程编号">-->
+      <!--        <el-input v-model="form.number" disabled placeholder="请输入课程编号" />-->
+      <!--      </el-form-item>-->
+      <el-form-item prop="name" label="课程名称">
+        <el-input v-model="form.name" placeholder="请输入课程名称" />
       </el-form-item>
-
       <el-form-item>
         <el-button type="primary" @click="submitForm('form')">提交</el-button>
         <el-button @click="resetForm('form')">重置</el-button>
@@ -28,16 +30,11 @@
 </template>
 
 <script>
-import ImageCropper from '@/components/ImageCropper'
-import PanThumb from '@/components/PanThumb'
-import { create, getById, update } from '@/api/stu/roleManagement'
+import { create, getById, update } from '@/api/stu/course-management'
 export default {
-  name: 'RoleManagement',
+  name: 'CourseManagement',
   components: {
-    ImageCropper,
-    PanThumb
   },
-
   props: {
     dialogVisible: {
       type: Boolean,
@@ -61,12 +58,13 @@ export default {
     return {
 
       form: {
-        'username': ''
+
+        name: ''
       },
       rules: {
         // //
-        username: [
-          { message: '用户名不能为空', required: true, trigger: 'blur' }
+        name: [
+          { message: '课程名称不能为空', required: true, trigger: 'blur' }
         ]
       }
     }
@@ -74,7 +72,6 @@ export default {
   computed: {},
   watch: {},
   created() {
-    this.getRole()
   },
   methods: {
 

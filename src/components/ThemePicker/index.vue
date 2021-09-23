@@ -6,7 +6,6 @@
     popper-class="theme-picker-dropdown"
   />
 </template>
-
 <script>
 const version = require('element-ui/package.json').version // element-ui version from node_modules
 const ORIGINAL_THEME = '#409EFF' // default color
@@ -36,7 +35,6 @@ export default {
       const themeCluster = this.getThemeCluster(val.replace('#', ''))
       const originalCluster = this.getThemeCluster(oldVal.replace('#', ''))
       console.log(themeCluster, originalCluster)
-
       const $message = this.$message({
         message: '  Compiling the theme',
         customClass: 'theme-message',
@@ -79,7 +77,7 @@ export default {
         if (typeof innerText !== 'string') return
         style.innerText = this.updateStyle(innerText, originalCluster, themeCluster)
       })
-
+      console.log(styles)
       this.$emit('change', val)
 
       $message.close()
@@ -94,7 +92,6 @@ export default {
       })
       return newStyle
     },
-
     getCSSString(url, variable) {
       return new Promise(resolve => {
         const xhr = new XMLHttpRequest()
@@ -108,7 +105,6 @@ export default {
         xhr.send()
       })
     },
-
     getThemeCluster(theme) {
       const tintColor = (color, tint) => {
         let red = parseInt(color.slice(0, 2), 16)

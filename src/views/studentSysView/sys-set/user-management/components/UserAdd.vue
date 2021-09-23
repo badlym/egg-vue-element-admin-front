@@ -49,6 +49,14 @@
       <el-form-item prop="phone" label="手机号">
         <el-input v-model="form.phone" placeholder="请输入手机号" />
       </el-form-item>
+      <el-form-item label="部门" prop="deptId">
+        <treeselect
+          v-model="form.deptId"
+          :options="departments"
+          :normalizer="normalizer"
+          placeholder="选择部门"
+        />
+      </el-form-item>
       <el-form-item prop="roleId" label="角色">
 
         <el-select v-model="form.roleId" filterable placeholder="请选择角色">
@@ -61,6 +69,7 @@
           </el-option>
         </el-select>
       </el-form-item>
+
       <el-form-item>
         <el-button type="primary" @click="submitForm('form')">提交</el-button>
         <el-button @click="resetForm('form')">重置</el-button>
@@ -74,11 +83,15 @@ import ImageCropper from '@/components/ImageCropper'
 import PanThumb from '@/components/PanThumb'
 import { create, getUserById, update } from '@/api/stu/user-management'
 import { getRole } from '@/api/stu/user-management'
+import { departments } from '@/api/stu/dept-management'
+import Treeselect from '@riophae/vue-treeselect'
+import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 export default {
   name: 'UserAdd',
   components: {
     ImageCropper,
-    PanThumb
+    PanThumb,
+    Treeselect
   },
   props: {
     dialogVisible: {
@@ -109,9 +122,11 @@ export default {
         name: '',
         avatar: '',
         'roleId': '',
-        'phone': ''
+        'phone': '',
+        deptId: null
       },
       rolesList: [],
+      departments: [],
       rules: {
         // //
         username: [
@@ -131,6 +146,9 @@ export default {
         ],
         phone: [
           { required: true, message: '手机号不能为空', trigger: 'blur' }
+        ],
+        deptId: [
+          { required: true, message: '部门不能为空', trigger: 'blur' }
         ]
 
       }
@@ -140,8 +158,20 @@ export default {
   watch: {},
   created() {
     this.getRole()
+    this.getDepartments()
   },
   methods: {
+    async  getDepartments() {
+      const res = await departments()
+      this.departments = res.data.list
+    },
+    normalizer(node) {
+      return {
+        id: node.id,
+        label: node.name,
+        children: node.children
+      }
+    },
     async getRole() {
       const res = await getRole()
       this.rolesList = res.data

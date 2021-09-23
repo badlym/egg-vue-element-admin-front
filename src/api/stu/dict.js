@@ -2,47 +2,45 @@ import request from '@/utils/request'
 
 export function getList(query) {
   return request({
-    url: '/api/role',
+    url: '/api/dict',
     params: query
   })
 }
 export function create(data) {
   return request({
-    url: '/api/role',
+    url: '/api/dict',
     data,
     method: 'post'
   })
 }
 export function update(data) {
   return request({
-    url: '/api/role/' + data.id,
+    url: '/api/dict/' + data.id,
     method: 'put',
     data
   })
 }
 export function del(id) {
   return request({
-    url: '/api/role/' + id,
+    url: '/api/dict/' + id,
     method: 'delete'
   })
 }
 export function remove(data) {
   return request({
-    url: '/api/role/remove',
+    url: '/api/dict/remove',
     method: 'delete',
     data
   })
 }
 export function getById(id) {
   return request({
-    url: '/api/role/' + id
+    url: '/api/dict/' + id
   })
 }
-
-export function updateByDept(data) {
+export function getDataScope(query) {
   return request({
-    url: '/api/role/updatebydept',
-    method: 'put',
-    data
+    url: '/api/dict/getDict',
+    params: query
   })
 }

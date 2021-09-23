@@ -5,6 +5,7 @@ Vue.use(Router)
 /* Layout */
 import Layout from '@/layout'
 import sysSet from './modules/sys-set'
+import workbench from '@/router/modules/workbench'
 /* Router Modules */
 
 /**
@@ -85,6 +86,7 @@ export const constantRoutes = [
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
+  workbench,
   sysSet,
 
   // 404 page must be placed at the end !!!

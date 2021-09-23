@@ -33,6 +33,12 @@ export default {
       component: () => import('@/views/studentSysView/sys-set/dept-management'),
       name: 'DeptManagement',
       meta: { title: '部门管理', icon: 'icon-sanjicaidan' }
+    },
+    {
+      path: 'dict',
+      component: () => import('@/views/studentSysView/sys-set/dict'),
+      name: 'Dict',
+      meta: { title: '数据字典', icon: 'icon-sanjicaidan' }
     }
   ]
 }

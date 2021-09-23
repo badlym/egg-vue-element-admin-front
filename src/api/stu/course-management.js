@@ -1,48 +1,53 @@
 import request from '@/utils/request'
-
 export function getList(query) {
   return request({
-    url: '/api/role',
+    url: '/api/course',
     params: query
   })
 }
 export function create(data) {
   return request({
-    url: '/api/role',
+    url: '/api/course',
     data,
     method: 'post'
   })
 }
 export function update(data) {
   return request({
-    url: '/api/role/' + data.id,
+    url: '/api/course/' + data.id,
     method: 'put',
     data
   })
 }
+
 export function del(id) {
   return request({
-    url: '/api/role/' + id,
+    url: '/api/course/' + id,
     method: 'delete'
   })
 }
+
+/**
+ *
+ * @param {Object}  data
+ * @return {AxiosPromise}
+ */
 export function remove(data) {
   return request({
-    url: '/api/role/remove',
+    url: '/api/course/remove',
     method: 'delete',
     data
   })
 }
+
+/**
+ *
+ * @param id
+ * @return {AxiosPromise}
+ */
 export function getById(id) {
   return request({
-    url: '/api/role/' + id
+    url: '/api/course/' + id
   })
 }
 
-export function updateByDept(data) {
-  return request({
-    url: '/api/role/updatebydept',
-    method: 'put',
-    data
-  })
-}

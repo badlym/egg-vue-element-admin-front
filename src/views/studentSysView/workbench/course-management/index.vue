@@ -1,8 +1,9 @@
 <template>
+
   <div class="app-container">
     <el-form ref="form" inline :model="form" label-width="80px">
-      <el-form-item label="用户名" prop="username">
-        <el-input v-model="form.username" placeholder="请输入用户名"></el-input>
+      <el-form-item label="课程名" prop="name">
+        <el-input v-model="form.name" placeholder="请输入课程名"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submit('form')">提交</el-button>
@@ -33,21 +34,15 @@
       @selection-change="handleSelectionChange"
     >
       <el-table-column type="selection" />
-      <el-table-column show-overflow-tooltip align="center" label="角色字段" prop="name"></el-table-column>
-      <el-table-column show-overflow-tooltip align="center" label="描述" prop="description"></el-table-column>
-      <el-table-column :formatter="handleDataScopeFormatter" show-overflow-tooltip align="center" label="数据权限" prop="data_scope"></el-table-column>
+      <el-table-column show-overflow-tooltip align="center" label="课程名" prop="name"></el-table-column>
+      <el-table-column show-overflow-tooltip align="center" label="课程编号" prop="number"></el-table-column>
       <el-table-column align="center" label="操作">
         <template slot-scope="scope">
           <el-button
             size="mini"
             type="primary"
-            @click="handleOpenDataScope(scope.row)"
-          >数据权限
-          </el-button>
-          <el-button
-            size="mini"
-            type="primary"
-            @click="handleEdit(scope.row)"
+            @click="
+              handleEdit (scope.row)"
           >编辑
           </el-button>
           <el-button
@@ -66,42 +61,33 @@
       :type="editData.type"
       @update-list="getList()"
     ></Edit>
-    <RoleDataScope ref="roleDataScope" :dialog-visible.sync="dataScopeData.dialogVisible" :title="dataScopeData.title" :data="dataScopeData.data"></RoleDataScope>
     <pagination
       v-show="total>0"
       :total="total"
       :page.sync="form.current"
       :limit.sync="form.limit"
-      @pagination="handlePaginationChange"
+      @pagination="getList"
     />
   </div>
 </template>
+
 <script>
-import { del, getList, remove } from '@/api/stu/role-management'
-import Edit from './components/RoleManagementEdit'
-import RoleDataScope from '@/views/studentSysView/sys-set/role-management/components/RoleDataScope'
-import { getDataScope } from '@/api/stu/dict'
+import { del, getList, remove } from '@/api/stu/course-management'
+import Edit from './components/CourseManagementEdit'
 export default {
-  name: 'RoleManagement',
+  name: 'CourseManagement',
   components: {
-    Edit,
-    RoleDataScope
+    Edit
   },
   data() {
     return {
-
-      dataScopeData: {
-        dialogVisible: false,
-        data: {},
-        title: ''
-      },
-      dictList: [],
       delbuttonFlag: true,
       multipleSelectionIds: [],
       form: {
         current: 1,
         limit: 10,
-        username: ''
+        name: ''
+
       },
       editData: {
         dialogVisible: false,
@@ -114,40 +100,10 @@ export default {
       list: []
     }
   },
-  async created() {
-    await this.getDataScopeList()
-    await this.getList()
+  created() {
+    this.getList()
   },
   methods: {
-    async  getDataScopeList() {
-      const res = await getDataScope({
-        data_type: 'data_scope'
-      })
-      this.dictList = res.data
-    },
-    handleDataScopeFormatter(row, column, cellValue, index) {
-      const dictList = this.dictList
-      let val = ''
-      for (let i = 0; i < dictList.length; i++) {
-        if (cellValue === dictList[i].data_key) {
-          val = dictList[i].data_value
-          break
-        }
-      }
-      return val
-    },
-    handleOpenDataScope(row) {
-      this.dataScopeData = {
-        dialogVisible: true,
-        data: { ...row },
-        title: '数据权限'
-      }
-    },
-    handlePaginationChange({ page, limit }) {
-      this.form.current = page
-      this.form.limit = limit
-      this.getList()
-    },
     submit(formName) {
       this.getList()
     },
@@ -159,7 +115,6 @@ export default {
         }
       )
       this.$message.success(res.msg)
-      this.getList()
     },
     handleSelectionChange(val) {
       this.multipleSelectionIds = val.map(item => {
@@ -168,10 +123,7 @@ export default {
       this.delbuttonFlag = !val.length
     },
     add() {
-      this.editData
-        .dialogVisible = true
-      this.editData.data = {}
-      this.editData.type = 'add'
+      this.editData.dialogVisible = true
     },
     async getList() {
       const res = await getList(this.form)
@@ -181,9 +133,9 @@ export default {
     handleEdit(row) {
       this.editData = {
         dialogVisible: true,
-        data: row,
+        data: { ...row },
         type: 'edit',
-        title: '编辑用户'
+        title: '编辑'
       }
     },
     handleDelete(row) {
@@ -205,6 +157,7 @@ export default {
         })
       })
     }
+
   }
 }
 </script>

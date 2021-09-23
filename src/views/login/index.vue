@@ -43,6 +43,20 @@
         </el-form-item>
       </el-tooltip>
 
+      <!--      <el-select v-model="type" style="margin-bottom: 20px" placeholder="请选择角色">-->
+      <!--        <el-option-->
+      <!--          v-for="item in [-->
+      <!--            {value:1,label:'管理员'},-->
+      <!--            {value:2,label:'教师'},-->
+      <!--            {value:3,label:'学生'},-->
+      <!--          ]"-->
+      <!--          :key="item.value"-->
+      <!--          :label="item.label"-->
+      <!--          :value="item.value"-->
+      <!--        >-->
+      <!--        </el-option>-->
+      <!--      </el-select>-->
+
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button>
 
       <!--      <div style="position:relative">-->
@@ -60,7 +74,6 @@
       <!--        </el-button>-->
       <!--      </div>-->
     </el-form>
-
     <el-dialog title="Or connect with" :visible.sync="showDialog">
       Can not be simulated on local, so please combine you own business simulation! ! !
       <br>
@@ -70,7 +83,6 @@
     </el-dialog>
   </div>
 </template>
-
 <script>
 import { validUsername } from '@/utils/validate'
 import SocialSign from './components/SocialSignin'
@@ -94,10 +106,12 @@ export default {
       }
     }
     return {
+      type: 1,
       settings,
       loginForm: {
         username: 'admin',
-        password: '111111'
+        password: '123456',
+        type: 1
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur' }],
@@ -155,6 +169,7 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
+          this.loginForm.type = this.type
           this.$store.dispatch('user/login', this.loginForm)
             .then(() => {
               this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
