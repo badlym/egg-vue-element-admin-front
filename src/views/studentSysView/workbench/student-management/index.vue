@@ -76,7 +76,7 @@ import { del, getList, remove } from '@/api/stu/course-management'
 import Edit from './components/CourseManagementEdit'
 
 export default {
-  name: 'CourseManagement',
+  name: 'StudentManagement',
   components: {
     Edit
   },
