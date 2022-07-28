@@ -5,7 +5,7 @@ import drag from '@/directive/el-drag-dialog'
 import permission from '@/directive/permission/index.js'
 import action from '@/directive/action'
 import moment from 'moment' // 导入文件
-import VueCompositionAPI from '@vue/composition-api'
+
 export default {
   install(Vue) {
     Vue.prototype.$bus = new Vue() // bus  中央总线
@@ -15,6 +15,5 @@ export default {
     Vue.prototype.$moment = moment // moment 日期组件
     Vue.prototype.$http = request // by  刘程锦 以后用这个 axios实例
     Vue.component('Pagination', Pagination) // 全局分页
-    Vue.use(VueCompositionAPI)
   }
 }
