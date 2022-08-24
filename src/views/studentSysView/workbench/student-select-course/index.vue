@@ -73,7 +73,7 @@
 
 <script>
 import { del, getList, remove } from '@/api/stu/course-management'
-import { getUserCourse } from '@/api/stu/user-management'
+import { getStudentCourse } from '@/api/stu/user-management'
 // import Edit from './components/CourseManagementEdit'
 export default {
   name: 'CourseManagement',
@@ -86,8 +86,7 @@ export default {
       multipleSelectionIds: [],
       form: {
         current: 1,
-        limit: 10,
-        name: ''
+        limit: 10
 
       },
       editData: {
@@ -103,12 +102,13 @@ export default {
   },
   created() {
     this.getList()
-    this.getUserCourse()
+    this.getStudentCourse()
   },
   methods: {
 
-    async getUserCourse() {
-      const res = await getUserCourse(this.form)
+    async getStudentCourse() {
+      const res = await getStudentCourse(this.form)
+      console.log(res)
     },
 
     submit(formName) {

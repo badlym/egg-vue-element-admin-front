@@ -20,7 +20,7 @@ export default {
       path: 'student-select-course',
       component: () => import('@/views/studentSysView/workbench/student-select-course'),
       name: 'studentSelectCourse',
-      meta: { title: '选课情况', icon: 'icon-sanjicaidan', roles: ['student'] }// you can set roles in root nav }
+      meta: { title: '学生选课情况', icon: 'icon-sanjicaidan', roles: ['student', 'teacher'] }// you can set roles in root nav }
     }
 
   ]

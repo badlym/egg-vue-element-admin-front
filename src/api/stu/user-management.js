@@ -44,9 +44,9 @@ export function getRole() {
 
   })
 }
-export function getUserCourse(query) {
+export function getStudentCourse(query) {
   return request({
-    url: '/api/user/getUserCourse',
+    url: '/api/student/getStudentCourse',
     params: query
   })
 }
